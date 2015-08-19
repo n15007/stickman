@@ -32,7 +32,6 @@ class Game:
                 sprite.move()
         else:
             time.sleep(1)
-            self.canvas.itemconfig(self.game_over_text, state='normal')
         self.tk.update_idletasks()
         self.tk.update()
         self.tk.after(10, self.mainloop)
@@ -95,7 +94,8 @@ class PlatformSprite(Sprite):
     def collision(self):
         if self.ng:
             time.sleep(1)
-            self.canvas.itemconfig(self.game_over_text, state='normal')
+            self.game.canvas.create_text(260, 50, text='clera')
+
 
 class MovingPlatformSprite(PlatformSprite):
     def __init__(self, game, photo_image, x, y, width, height, ng=False):
@@ -136,7 +136,8 @@ class UpPlatformSprite(PlatformSprite):
     def collision(self):
         if self.ng:
             time.sleep(1)
-            self.canvas.itemconfig(self.game_over_text, state='normal')
+            self.game.canvas.create_text(260, 50, text='Game Over', font=("IPAexGothic", 50))
+            self.game.running = False
 
     def coords(self):
         xy = self.game.canvas.coords(self.image)
@@ -289,6 +290,7 @@ class StickFigureSprite(Sprite):
         sprite.opendoor()
         time.sleep(1)
         self.game.canvas.itemconfig(self.image, state='hidden')
+        self.game.canvas.create_text(260, 50, text='You Win', font=("IPAexGothic", 50))
         sprite.closedoor()
 
 
@@ -323,7 +325,7 @@ if __name__ == '__main__':
     platform8 = PlatformSprite(g, PhotoImage(file='stickman/platform2.gif'), 45, 80, 66, 10)
     platform9 = MovingPlatformSprite(g, PhotoImage(file='stickman/platform3.gif'), 170, 260, 32, 10)
     platform10 = PlatformSprite(g, PhotoImage(file='stickman/platform3.gif'), 230, 200, 32, 10)
-    platform11 = UpPlatformSprite(g, PhotoImage(file='stickman/platform1.gif'), 0, 500, 100, 10, True)
+    platform11 = UpPlatformSprite(g, PhotoImage(file='stickman/platform4.gif'), 0, 550, 500, 15, True)
     g.sprites.append(platform1)
     g.sprites.append(platform2)
     g.sprites.append(platform3)
